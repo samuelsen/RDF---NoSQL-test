@@ -1,0 +1,13 @@
+#SPAQL queries
+
+#Count number of instances with the same age
+PREFIX soc: <http://www.example.com/sock-pokec/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX user: <http://www.example.com/user/>
+
+SELECT ?object (COUNT(?object) as ?ageEntries)
+WHERE {
+  ?subject ?predicate ?object
+  FILTER (?predicate = foaf:age)
+}
+GROUPBY ?object
