@@ -1,4 +1,4 @@
-# RDF transfomer and query for NoSQL benchmark
+# RDF transfomer and query for ArangoDB NoSQL benchmark
 This repo contains a mapping and transformation of the csv representation of the Pokec social network dump used in the ArangoDB NoSQL benchmark test.
  It also includes the file containing the queries used for the benchmark.
 
