@@ -2,10 +2,11 @@
 This repo contains a mapping and transformation of the csv representation of the Pokec social network dump used in the ArangoDB NoSQL benchmark test.
  It also includes the file containing the queries used for the benchmark.
 
- ## Hot to
+ ## How to
  First download the dump files from stanford: https://snap.stanford.edu/data/soc-pokec.html
 
 Put them in the corresponding folders (relations / profiles).
+you'll also need to make two folders within the relations and profiles folders, they should be named `nt` and `source`.
 Since the files are in `.txt` format and the files are separated with tab we need to convert them to the csv format. This can be done by running a command inside each folder. 
 
 For the profiles run this command: `tr '\t' , < soc-pokec-profiles.txt > soc-pokec-profiles.csv`
