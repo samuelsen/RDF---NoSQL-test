@@ -1,13 +1,146 @@
 #SPAQL queries
 
-#Count number of instances with the same age
+#single-read - get profiles
+PREFIX user: <http://www.example.com/user/>
+PREFIX soc: <http://www.example.com/sock-pokec/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT ?s ?p ?o
+WHERE {
+  user:1 ?p ?o
+}
+
+#single write - write profiles
+#input json object
+
+PREFIX user: <http://www.example.com/user/>
+PREFIX soc: <http://www.example.com/sock-pokec/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+INSERT DATA {
+  user:doc.ID soc:public doc.public .
+  user:doc.ID soc:completion_percentage doc.completion_percentage .
+  user:doc.ID foaf:gender doc.gender .
+  user:doc.ID soc:region doc.region .
+  user:doc.ID soc:last_login doc.last_login .
+  user:doc.ID soc:registration doc.registration .
+  user:doc.ID foaf:age doc.AGE .
+  user:doc.ID soc:body doc.body .
+  user:doc.ID soc:I_am_working_in_field doc.I_am_working_in_field .
+  user:doc.ID soc:spoken_languages doc.spoken_languages .
+  user:doc.ID soc:hobbies doc.hobbies .
+  user:doc.ID soc:I_most_enjoy_good_food doc.I_most_enjoy_good_food .
+  user:doc.ID soc:pets doc.object .
+  user:doc.ID soc:body_type doc.body_type .
+  user:doc.ID soc:my_eyesight doc.my_eyesight .
+  user:doc.ID soc:eye_color doc.eye_color .
+  user:doc.ID soc:hair_color doc.hair_color .
+  user:doc.ID soc:hair_type doc.hair_type .
+  user:doc.ID soc:completed_level_of_education doc.completed_level_of_education .
+  user:doc.ID soc:favourite_color doc.favourite_color .
+  user:doc.ID soc:relation_to_smoking doc.relation_to_smoking .
+  user:doc.ID soc:relation_to_alcohol doc.relation_to_alcohol .
+  user:doc.ID soc:sign_in_zodia doc.sign_in_zodiac .
+  user:doc.ID soc:on_pokec_i_am_looking_for doc.on_pokec_i_am_looking_for .
+  user:doc.ID soc:love_is_for_m doc.love_is_for_me .
+  user:doc.ID soc:relation_to_casual_se doc.relation_to_casual_sex .
+  user:doc.ID soc:my_partner_should_b doc.my_partner_should_be .
+  user:doc.ID soc:marital_statu doc.marital_status .
+  user:doc.ID soc:childre doc.children .
+  user:doc.ID soc:relation_to_childre doc.relation_to_children .
+  user:doc.ID soc:I_like_movies doc.I_like_movies .
+  user:doc.ID soc:I_like_watching_movie doc.I_like_watching_movie .
+  user:doc.ID soc:I_like_musi doc.I_like_music .
+  user:doc.ID soc:I_mostly_like_listening_to_musi doc.I_mostly_like_listening_to_music .
+  user:doc.ID soc:the_idea_of_good_evenin doc.the_idea_of_good_evening .
+  user:doc.ID soc:I_like_specialties_from_kitchen doc.I_like_specialties_from_kitchen .
+  user:doc.ID soc:fun doc.fun .
+  user:doc.ID soc:I_am_going_to_concert doc.I_am_going_to_concerts .
+  user:doc.ID soc:my_active_sport doc.my_active_sports .
+  user:doc.ID soc:my_passive_sports doc.my_passive_sports .
+  user:doc.ID soc:professio doc.profession .
+  user:doc.ID soc:I_like_book doc.I_like_books .
+  user:doc.ID soc:life_styl doc.life_style .
+  user:doc.ID soc:music doc.music .
+  user:doc.ID soc:car doc.cars .
+  user:doc.ID soc:politic doc.politics .
+  user:doc.ID soc:relationships doc.relationships .
+  user:doc.ID soc:art_culture doc.art_culture .
+  user:doc.ID soc:hobbies_interests doc.hobbies_interests .
+  user:doc.ID soc:science_technologie doc.science_technologies .
+  user:doc.ID soc:computers_interne doc.computers_internet .
+  user:doc.ID soc:education doc.education .
+  user:doc.ID soc:sport doc.sport .
+  user:doc.ID soc:movie doc.movies .
+  user:doc.ID soc:travellin doc.travelling .
+  user:doc.ID soc:healt doc.health .
+  user:doc.ID soc:companies_brand doc.companies_brands .
+  user:doc.ID soc:mor doc.more .
+}
+
+
+#aggregation - Count number of instances with the same age
 PREFIX soc: <http://www.example.com/sock-pokec/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX user: <http://www.example.com/user/>
 
 SELECT ?object (COUNT(?object) as ?ageEntries)
 WHERE {
-  ?subject ?predicate ?object
-  FILTER (?predicate = foaf:age)
+  ?subject foaf:age ?object
 }
 GROUPBY ?object
+
+#neighbors second - get all friends of friends ids
+PREFIX soc: <http://www.example.com/sock-pokec/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX user: <http://www.example.com/user/>
+
+SELECT ?subject ?x ?object
+WHERE {
+  ?subject foaf:knows ?x.
+  ?x foaf:knows ?object
+  FILTER (?subject != ?object)
+}
+
+#neighbors second - get all friends of friends ids
+ PREFIX soc: <http://www.example.com/sock-pokec/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX user: <http://www.example.com/user/>
+
+SELECT ?x ?object
+WHERE {
+  <http://www.example.com/user/1..1000> foaf:knows ?x.
+  ?x foaf:knows ?object
+  FILTER (?subject != ?object)
+}
+
+#2nd neighbors 100
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+select distinct ?union ?pred ?value 
+where {
+{
+     {
+   select ?union {
+    ?x foaf:knows ?union .
+          values ?x { <http://www.example.com/user/1> } .
+          FILTER (?union != ?x)
+   }
+  } UNION {
+   select ?union {
+    ?x foaf:knows ?y .
+    ?y foaf:knows ?union .
+          values ?x { <http://www.example.com/user/1> } .
+          FILTER (?union != ?x)
+   }
+  } .
+  ?union ?pred ?value .
+  FILTER (?pred != foaf:knows ) .
+  
+}
+}
+
+#Shortest path
+
+PREFIX soc: <http://www.example.com/sock-pokec/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX user: <http://www.example.com/user/>
+ASK { user:1 foaf:knows* user:2 }

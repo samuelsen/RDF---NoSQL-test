@@ -1,6 +1,6 @@
 #!/bin/bash
 
-lineNumber=${1-10000}
+lineNumber=${1-50000}
 
 echo $lineNumber
 
