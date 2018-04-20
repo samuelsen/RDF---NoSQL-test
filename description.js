@@ -8,7 +8,7 @@ module.exports = {
 
     startup: function (host, cb) {
         db = new SparqlClient('http://'+host+':3030/soc-pokec/query', {
-            updateEndpoint: 'http://'+host+':3030/soc-pokec/update'
+            updateEndpoint: 'http://'+host+':3030/soc-pokec_temp/update'
           });
         cb(db)
     },
