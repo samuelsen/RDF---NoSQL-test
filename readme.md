@@ -36,5 +36,7 @@ Uses the following URIs:
 `http://www.example.com/soc-pokec/` - is used for all other values from the data set using the column names described her: https://snap.stanford.edu/data/soc-pokec-readme.txt as the value for the relation. EG: `http://www.example.com/soc-pokec/public/`
 
 ## description.js
+Before using this description with the NoSQL benchmark, you would need to install the node package `sparql-client-2`.
+
 The file description.js contains the setup to connect to a SPARQL endpoint. In this file the endpoint is set up to correspond to the apache fuseki portnumber and endpoints.
 Notice that to make the queries on the inputed ID the first characther of each id is removed since the benchmark on setup applise an additional `P` in front of each user ID.
