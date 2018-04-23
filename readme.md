@@ -38,5 +38,5 @@ Uses the following URIs:
 ## description.js
 Before using this description with the NoSQL benchmark, you would need to install the node package `sparql-client-2`.
 
-The file description.js contains the setup to connect to a SPARQL endpoint. In this file the endpoint is set up to correspond to the apache fuseki portnumber and endpoints.
+The file `description.js` contains the setup to connect to a SPARQL endpoint. In this file the endpoint is set up to correspond to the apache fuseki portnumber and endpoints.
 Notice that to make the queries on the inputed ID the first characther of each id is removed since the benchmark on setup applise an additional `P` in front of each user ID.
