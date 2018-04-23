@@ -34,3 +34,7 @@ Uses the following URIs:
 `http://http://xmlns.com/foaf/0.1/` - using the `foaf:age` for the age column and  `foaf:gender` for the gender column.
 
 `http://www.example.com/soc-pokec/` - is used for all other values from the data set using the column names described her: https://snap.stanford.edu/data/soc-pokec-readme.txt as the value for the relation. EG: `http://www.example.com/soc-pokec/public/`
+
+## description.js
+The file description.js contains the setup to connect to a SPARQL endpoint. In this file the endpoint is set up to correspond to the apache fuseki portnumber and endpoints.
+Notice that to make the queries on the inputed ID the first characther of each id is removed since the benchmark on setup applise an additional `P` in front of each user ID.
