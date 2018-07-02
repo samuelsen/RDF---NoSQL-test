@@ -44,6 +44,7 @@ module.exports = {
 
     getCollection(db, name, cb){
         cb(undefined, name.toUpperCase());
+        
     },
 
     dropCollection: function (db, name, cb) {
@@ -67,7 +68,7 @@ module.exports = {
     },
     
     aggregate: function (db, coll, cb) {
-        var query = "PREFIX soc: <http://www.example.com/sock-pokec/> PREFIX foaf: <http://xmlns.com/foaf/0.1/> PREFIX user: <http://www.example.com/user/> SELECT ?object (COUNT(?object) as ?ageEntries) WHERE { ?subject foaf:age ?object } GROUPBY ?object ";
+        var query = "PREFIX soc: <http://www.example.com/sock-pokec/> PREFIX foaf: <http://xmlns.com/foaf/0.1/> PREFIX user: <http://www.example.com/user/> SELECT (SUM(?object)) (COUNT(?object) as ?ageEntries) WHERE { ?subject foaf:age ?object } GROUPBY ?object ";
         db.query(query).execute().then(res => cb(null, res.results.bindings)).catch(err => cb(err));
     },
     
